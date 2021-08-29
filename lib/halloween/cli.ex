@@ -63,14 +63,20 @@ defmodule Halloween.CLI do
       |> Enum.map(&File.read/1)
 
     if Enum.any?(results, fn {type, _} -> type == :error end) do
-      results
-      |> Enum.filter(fn {type, _} -> type == :error end)
-      |> Enum.map(fn {:error, reason} -> Atom.to_string(reason) end)
+      Enum.zip(filenames, results)
+      |> Enum.filter(fn {_, {type, _}} -> type == :error end)
+      |> Enum.map(fn {filename, {_, reason}} -> generate_error_message(filename, reason) end)
+      |> Enum.join("\n")
     else
       results
       |> Enum.map(fn {:ok, text} -> text end)
       |> Enum.join()
       |> Halloween.to_halloween(halloween)
     end
+  end
+
+  defp generate_error_message(filename, reason) do
+    reason = reason |> :file.format_error() |> List.to_string()
+    filename <> ": " <> reason
   end
 end

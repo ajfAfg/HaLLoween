@@ -84,7 +84,8 @@ defmodule CliTest do
     end
 
     test "Return error messages if some files cannot be read.", fixture do
-      assert process({["not_found.txt" | fixture.filenames], 0}) == ["enoent"]
+      filenames = ["not_found.txt" | fixture.filenames]
+      assert process({filenames, 0}) == "not_found.txt: no such file or directory"
     end
   end
 end
