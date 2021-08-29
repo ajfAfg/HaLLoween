@@ -3,7 +3,7 @@ defmodule CliTest do
   doctest Halloween.CLI
 
   import ExUnit.CaptureIO
-  import Halloween.CLI, only: [parse_argv: 1, process: 1, read_file_or_stdin: 1]
+  import Halloween.CLI, only: [parse_argv: 1, process: 1]
 
   setup_all do
     [
@@ -71,7 +71,7 @@ defmodule CliTest do
     end
 
     setup do
-      filenames = ["test/test.txt", "test/test2.txt"]
+      filenames = ["test/test1.txt", "test/test2.txt"]
 
       [
         filenames: filenames,
@@ -85,17 +85,6 @@ defmodule CliTest do
 
     test "Return error messages if some files cannot be read.", fixture do
       assert process({["not_found.txt" | fixture.filenames], 0}) == ["enoent"]
-    end
-  end
-
-  describe "Read the file or standard input." do
-    test "Read the file.", fixture do
-      assert read_file_or_stdin("test/test.txt") == fixture.text
-    end
-
-    test "Read standard input.", fixture do
-      fun = fn -> read_file_or_stdin("-") |> IO.write() end
-      assert capture_io(fixture.text, fun) == fixture.text
     end
   end
 end

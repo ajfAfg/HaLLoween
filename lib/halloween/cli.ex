@@ -54,19 +54,14 @@ defmodule Halloween.CLI do
   end
 
   def process({"-", halloween}) do
-    # read_file_or_stdin("-")
     IO.read(:all)
     |> Halloween.to_halloween(halloween)
-
-    # |> IO.puts()
   end
 
   def process({filenames, halloween}) do
     results =
       filenames
       |> Enum.map(&File.read/1)
-
-    # |> Enum.map(&read_file_or_stdin/1)
 
     if Enum.any?(results, fn {type, _} -> type == :error end) do
       results
@@ -78,20 +73,6 @@ defmodule Halloween.CLI do
       |> Enum.map(fn {:ok, text} -> text end)
       |> Enum.join()
       |> Halloween.to_halloween(halloween)
-
-      # |> IO.puts()
-    end
-  end
-
-  def read_file_or_stdin("-"), do: IO.read(:all)
-
-  def read_file_or_stdin(file) do
-    case File.read(file) do
-      {:ok, str} ->
-        str
-
-      err = {:error, _} ->
-        err
     end
   end
 end
