@@ -24,3 +24,6 @@ halloween-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# An escript
+halloween
