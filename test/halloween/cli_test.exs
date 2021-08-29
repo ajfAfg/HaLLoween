@@ -52,6 +52,11 @@ defmodule CliTest do
     test "When the file name is not specified, standard input is specified for the file name." do
       assert parse_argv(["-H", "20"]) == {"-", 20}
     end
+
+    test "When the file name and the halloween are not specified, standard input and a randon number are specified, respectively." do
+      {"-", halloween} = parse_argv([])
+      assert is_integer(halloween)
+    end
   end
 
   describe "Return texts according to the options." do
@@ -66,8 +71,8 @@ defmodule CliTest do
     end
 
     test "Read text from standard input and return the replaced text.", fixture do
-      fun = fn -> process({"-", 0}) |> IO.puts() end
-      assert capture_io(fixture.text, fun) == fixture.text <> "\n"
+      fun = fn -> process({"-", 0}) |> IO.write() end
+      assert capture_io(fixture.text, fun) == fixture.text
     end
 
     setup do

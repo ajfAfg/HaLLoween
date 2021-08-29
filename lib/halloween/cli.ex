@@ -8,7 +8,7 @@ defmodule Halloween.CLI do
     argv
     |> parse_argv()
     |> process()
-    |> IO.puts()
+    |> IO.write()
   end
 
   def parse_argv(argv) do
@@ -31,8 +31,11 @@ defmodule Halloween.CLI do
   defp to_intermediate_representation({%{help: true}, _, _}), do: :help
   defp to_intermediate_representation({%{version: true}, _, _}), do: :version
   defp to_intermediate_representation({%{halloween: num}, [], _}), do: {@stdin, num}
+  defp to_intermediate_representation({_, [], _}), do: {@stdin, rand()}
   defp to_intermediate_representation({%{halloween: num}, filenames, _}), do: {filenames, num}
-  defp to_intermediate_representation({_, filenames, _}), do: {filenames, Enum.random(1..100)}
+  defp to_intermediate_representation({_, filenames, _}), do: {filenames, rand()}
+
+  defp rand(), do: Enum.random(1..100)
 
   def process(:help) do
     """
