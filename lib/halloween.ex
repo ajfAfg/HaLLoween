@@ -8,9 +8,19 @@ defmodule Halloween do
 
   def to_halloween(text, halloween) do
     text
-    |> String.split()
-    |> Enum.map(&halloween_with_halloween(&1, halloween))
-    |> Enum.join(" ")
+    |> String.split("\n")
+    |> Enum.map(fn line ->
+      line
+      |> String.split()
+      |> Enum.map(&halloween_with_halloween(&1, halloween))
+      |> Enum.join(" ")
+    end)
+    |> Enum.join("\n")
+
+    # text
+    # |> String.split()
+    # |> Enum.map(&halloween_with_halloween(&1, halloween))
+    # |> Enum.join(" ")
   end
 
   def halloween_with_halloween(str, halloween) do
