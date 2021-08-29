@@ -1,4 +1,5 @@
 defmodule Halloween.CLI do
+  @version Mix.Project.config()[:version]
   @stdin "-"
 
   @moduledoc false
@@ -49,7 +50,7 @@ defmodule Halloween.CLI do
   end
 
   def process(:version) do
-    Mix.Project.config()[:version]
+    @version
   end
 
   def process({"-", halloween}) do
