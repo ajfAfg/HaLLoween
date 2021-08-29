@@ -39,7 +39,7 @@ defmodule Halloween.CLI do
 
   def process(:help) do
     """
-    Usage: TODO [options] [file ...]
+    Usage: halloween [options] [file ...]
 
     ## Options
       -H              Same as `--halloween`
