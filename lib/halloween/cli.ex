@@ -3,7 +3,7 @@ defmodule Halloween.CLI do
 
   @moduledoc false
 
-  def run(argv) do
+  def main(argv) do
     argv
     |> parse_argv()
     |> process()
