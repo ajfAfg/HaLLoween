@@ -45,7 +45,7 @@ defmodule HalloweenTest do
 
   describe "Return a HALLOWEEN string with the probability of halloween." do
     setup do
-      # First and second random number are 93 and 23, respectively.
+      # First and second random number are 3 and 74, respectively.
       :rand.seed(:exsss, ExUnit.configuration()[:seed])
 
       [
