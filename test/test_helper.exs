@@ -8,5 +8,5 @@ ExUnit.start()
 #   {Enum.random(0..100), Enum.random(0..100)}
 # end)
 #
-# First and second random number are 16 and 88, respectively.
-ExUnit.configure(seed: 30)
+# First and second random number are 3 and 74, respectively.
+ExUnit.configure(seed: 60)
