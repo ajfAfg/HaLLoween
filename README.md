@@ -26,7 +26,7 @@ mix escript.install github ajfAfg/HaLLoween
 
 ### Note
 
-This program will be placed in `~/.mix/escripts`.
+This program will be installed in `~/.mix/escripts`.
 So, if you haven't passed the path `~/.mix/escripts` yet, please do so as follows.
 
 ```bash
