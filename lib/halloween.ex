@@ -29,5 +29,5 @@ defmodule Halloween do
   def halloween(:midium), do: "HALLOWEEN!"
   def halloween(:high), do: "HALLOWEEN..."
 
-  defp rand(), do: Enum.random(0..100)
+  defp rand(), do: Enum.random(1..100)
 end
