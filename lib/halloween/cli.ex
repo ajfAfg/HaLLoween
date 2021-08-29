@@ -1,5 +1,5 @@
 defmodule Halloween.CLI do
-  @std_in "-"
+  @stdin "-"
 
   @moduledoc false
 
@@ -29,7 +29,7 @@ defmodule Halloween.CLI do
 
   defp to_intermediate_representation({%{help: true}, _, _}), do: :help
   defp to_intermediate_representation({%{version: true}, _, _}), do: :version
-  defp to_intermediate_representation({%{halloween: num}, [], _}), do: {@std_in, num}
+  defp to_intermediate_representation({%{halloween: num}, [], _}), do: {@stdin, num}
   defp to_intermediate_representation({%{halloween: num}, filenames, _}), do: {filenames, num}
   defp to_intermediate_representation({_, filenames, _}), do: {filenames, Enum.random(1..100)}
 
@@ -44,7 +44,6 @@ defmodule Halloween.CLI do
 
       --halloween     HaLLoween! (Probability of rewriting to HALLOWEEN [%])
       --help          Display available options
-      --output-dir    Specify output directory
       --version       Display the version of this software
     """
   end
@@ -66,7 +65,6 @@ defmodule Halloween.CLI do
     if Enum.any?(results, fn {type, _} -> type == :error end) do
       results
       |> Enum.filter(fn {type, _} -> type == :error end)
-      # |> Enum.each(fn {:error, info} -> IO.puts(info) end)
       |> Enum.map(fn {:error, reason} -> Atom.to_string(reason) end)
     else
       results
