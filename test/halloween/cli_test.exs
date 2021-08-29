@@ -15,12 +15,12 @@ defmodule CliTest do
   end
 
   describe "Parse command line arguments." do
-    test ":Return :help with -h and --help options." do
+    test "Return :help with -h and --help options." do
       assert parse_argv(["-h", "foo"]) == :help
       assert parse_argv(["--help", "foo"]) == :help
     end
 
-    test ":Return :version with -v and --version options." do
+    test "Return :version with -v and --version options." do
       assert parse_argv(["-v", "foo"]) == :version
       assert parse_argv(["--version", "foo"]) == :version
     end
@@ -54,18 +54,18 @@ defmodule CliTest do
     end
   end
 
-  describe "Run actions according to the options." do
-    test "Display heplful informations." do
+  describe "Return texts according to the options." do
+    test "Return heplful informations." do
       process(:help)
       |> IO.puts()
     end
 
-    test "Display the version of this software." do
+    test "Return the version of this software." do
       process(:version)
       |> IO.puts()
     end
 
-    test "Read text from standard input and display the replaced text.", fixture do
+    test "Read text from standard input and return the replaced text.", fixture do
       fun = fn -> process({"-", 0}) |> IO.puts() end
       assert capture_io(fixture.text, fun) == fixture.text <> "\n"
     end
@@ -79,7 +79,7 @@ defmodule CliTest do
       ]
     end
 
-    test "Read text from the files and display the replaced text.", fixture do
+    test "Read text from the files and return the replaced text.", fixture do
       assert process({fixture.filenames, 0}) == fixture.concat_files
     end
 
