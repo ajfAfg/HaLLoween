@@ -24,15 +24,6 @@ HALLOWEEN! HALLOWEEN! HALLOWEEN! very much. HALLOWEEN! HALLOWEEN! HALLOWEEN! HAL
 mix escript.install github ajfAfg/HaLLoween
 ```
 
-Or
-
-```bash
-git clone https://github.com/ajfAfg/HaLLoween.git
-cd HaLLoween
-mix escript.build
-mix escript.install
-```
-
 ### Note
 
 This program will be placed in `~/.mix/escripts`.
