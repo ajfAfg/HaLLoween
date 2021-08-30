@@ -9,7 +9,7 @@ defmodule Halloween.CLI do
     |> parse_argv()
     |> process()
     |> display()
-    |> System.stop()
+    |> System.halt()
   end
 
   def parse_argv(argv) do
