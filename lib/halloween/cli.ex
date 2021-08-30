@@ -8,7 +8,7 @@ defmodule Halloween.CLI do
     argv
     |> parse_argv()
     |> process()
-    |> IO.write()
+    |> display()
   end
 
   def parse_argv(argv) do
@@ -106,5 +106,10 @@ defmodule Halloween.CLI do
       --help          Display available options
       --version       Display the version of this software
     """
+  end
+
+  def display({text, exit_status}) do
+    IO.write(text)
+    System.halt(exit_status)
   end
 end
