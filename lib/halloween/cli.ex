@@ -28,12 +28,23 @@ defmodule Halloween.CLI do
     {Map.new(parsed), args, errors}
   end
 
-  defp to_intermediate_representation({%{help: true}, _, _}), do: :help
-  defp to_intermediate_representation({%{version: true}, _, _}), do: :version
-  defp to_intermediate_representation({%{halloween: num}, [], _}), do: {@stdin, num}
-  defp to_intermediate_representation({_, [], _}), do: {@stdin, rand()}
-  defp to_intermediate_representation({%{halloween: num}, filenames, _}), do: {filenames, num}
-  defp to_intermediate_representation({_, filenames, _}), do: {filenames, rand()}
+  defp to_intermediate_representation({parsed, args, _errors}) do
+    case {to_ir_for_args(args), to_ir_for_options(parsed)} do
+      {_, :error} -> :error
+      {_, :help} -> :help
+      {_, :version} -> :version
+      rep -> rep
+    end
+  end
+
+  defp to_ir_for_options(%{help: true}), do: :help
+  defp to_ir_for_options(%{version: true}), do: :version
+  defp to_ir_for_options(%{halloween: halloween}), do: halloween
+  defp to_ir_for_options(%{}), do: rand()
+  defp to_ir_for_options(_), do: :error
+
+  defp to_ir_for_args([]), do: @stdin
+  defp to_ir_for_args(filenames), do: filenames
 
   defp rand(), do: Enum.random(1..100)
 
