@@ -9,7 +9,7 @@ defmodule Halloween.CLI do
     |> parse_argv()
     |> process()
     |> display()
-    |> System.halt()
+    |> System.stop()
   end
 
   def parse_argv(argv) do
@@ -36,7 +36,8 @@ defmodule Halloween.CLI do
     end
   end
 
-  defp to_intermediate_representation({_parsed, _args, errors}), do: {:error, errors}
+  defp to_intermediate_representation({_parsed, _args, errors}),
+    do: {:error, Enum.map(errors, &elem(&1, 0))}
 
   defp to_ir_for_options(%{help: true}), do: :help
   defp to_ir_for_options(%{version: true}), do: :version
