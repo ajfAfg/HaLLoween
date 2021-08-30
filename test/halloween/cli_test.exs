@@ -62,16 +62,18 @@ defmodule CliTest do
   describe "Return texts according to the options." do
     test "Return heplful informations." do
       process(:help)
+      |> elem(0)
       |> IO.puts()
     end
 
     test "Return the version of this software." do
       process(:version)
+      |> elem(0)
       |> IO.puts()
     end
 
     test "Read text from standard input and return the replaced text.", fixture do
-      fun = fn -> process({"-", 0}) |> IO.write() end
+      fun = fn -> process({"-", 0}) |> elem(0) |> IO.write() end
       assert capture_io(fixture.text, fun) == fixture.text
     end
 
@@ -85,12 +87,12 @@ defmodule CliTest do
     end
 
     test "Read text from the files and return the replaced text.", fixture do
-      assert process({fixture.filenames, 0}) == fixture.concat_files
+      assert process({fixture.filenames, 0}) == {fixture.concat_files, 0}
     end
 
     test "Return error messages if some files cannot be read.", fixture do
       filenames = ["not_found.txt" | fixture.filenames]
-      assert process({filenames, 0}) == "not_found.txt: no such file or directory"
+      assert process({filenames, 0}) == {"not_found.txt: no such file or directory", 1}
     end
   end
 end
