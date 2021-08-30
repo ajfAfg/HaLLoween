@@ -57,6 +57,10 @@ defmodule CliTest do
       {"-", halloween} = parse_argv([])
       assert is_integer(halloween)
     end
+
+    test "Return illegal options with tuple." do
+      assert parse_argv(["--illegal-option"]) == {:error, ["--illegal-option"]}
+    end
   end
 
   describe "Return texts according to the options." do
