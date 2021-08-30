@@ -60,6 +60,12 @@ defmodule CliTest do
   end
 
   describe "Return texts according to the options." do
+    test "Return error message and usage." do
+      process({:error, ["--illegal-option"]})
+      |> elem(0)
+      |> IO.puts()
+    end
+
     test "Return heplful informations." do
       process(:help)
       |> elem(0)

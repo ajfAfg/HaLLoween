@@ -9,6 +9,7 @@ defmodule Halloween.CLI do
     |> parse_argv()
     |> process()
     |> display()
+    |> System.halt()
   end
 
   def parse_argv(argv) do
@@ -24,24 +25,23 @@ defmodule Halloween.CLI do
         [aliases: aliases, strict: strict]
       end
 
-    {parsed, args, errors} = OptionParser.parse(argv, opts)
-    {Map.new(parsed), args, errors}
+    OptionParser.parse(argv, opts)
   end
 
-  defp to_intermediate_representation({parsed, args, _errors}) do
-    case {to_ir_for_args(args), to_ir_for_options(parsed)} do
-      {_, err = {:error, _}} -> err
+  defp to_intermediate_representation({parsed, args, []}) do
+    case {to_ir_for_args(args), to_ir_for_options(Map.new(parsed))} do
       {_, :help} -> :help
       {_, :version} -> :version
       rep -> rep
     end
   end
 
+  defp to_intermediate_representation({_parsed, _args, errors}), do: {:error, errors}
+
   defp to_ir_for_options(%{help: true}), do: :help
   defp to_ir_for_options(%{version: true}), do: :version
   defp to_ir_for_options(%{halloween: halloween}), do: halloween
-  defp to_ir_for_options(%{}), do: rand()
-  defp to_ir_for_options(illegal_options), do: {:error, illegal_options}
+  defp to_ir_for_options(_), do: rand()
 
   defp to_ir_for_args([]), do: @stdin
   defp to_ir_for_args(filenames), do: filenames
@@ -50,8 +50,9 @@ defmodule Halloween.CLI do
 
   def process({:error, illegal_options}) do
     illegal_options
-    |> Enum.each(&"halloween: illegal option '#{&1}'")
+    |> Enum.map(&"halloween: illegal option '#{&1}'")
     |> Enum.join("\n")
+    |> Kernel.<>("\n")
     |> Kernel.<>(usage())
     |> with_exit_status(1)
   end
@@ -110,6 +111,6 @@ defmodule Halloween.CLI do
 
   def display({text, exit_status}) do
     IO.write(text)
-    System.halt(exit_status)
+    exit_status
   end
 end
