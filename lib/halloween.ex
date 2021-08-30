@@ -16,11 +16,6 @@ defmodule Halloween do
       |> Enum.join(" ")
     end)
     |> Enum.join("\n")
-
-    # text
-    # |> String.split()
-    # |> Enum.map(&halloween_with_halloween(&1, halloween))
-    # |> Enum.join(" ")
   end
 
   def halloween_with_halloween(str, halloween) do
