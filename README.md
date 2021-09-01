@@ -33,6 +33,21 @@ So, if you haven't passed the path `~/.mix/escripts` yet, please do so as follow
 export PATH=$PATH:~/.mix/escripts
 ```
 
+## Usage
+
+```
+Usage: halloween [options] [file ...]
+
+## Options
+  -H              Same as `--halloween`
+  -h              Same as `--help`
+  -v              Same as `--version`
+
+  --halloween     HaLLoween! (Probability of rewriting to HALLOWEEN [%])
+  --help          Display available options
+  --version       Display the version of this software
+```
+
 ## License
 
 HaLLoween source code is released under the MIT License.
