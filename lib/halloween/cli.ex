@@ -82,6 +82,7 @@ defmodule Halloween.CLI do
     |> Enum.filter(fn {_, {type, _}} -> type == :error end)
     |> Enum.map(fn {filename, {_, reason}} -> generate_error_message(filename, reason) end)
     |> Enum.join("\n")
+    |> Kernel.<>("\n")
     |> with_exit_status(1)
   end
 
