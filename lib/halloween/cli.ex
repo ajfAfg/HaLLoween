@@ -68,24 +68,30 @@ defmodule Halloween.CLI do
     |> with_exit_status(0)
   end
 
-  def process({filenames, halloween}) do
-    results =
-      filenames
-      |> Enum.map(&File.read/1)
+  def process({filenames, _halloween} = params) do
+    results = Enum.map(filenames, &File.read/1)
 
     if Enum.any?(results, fn {type, _} -> type == :error end) do
-      Enum.zip(filenames, results)
-      |> Enum.filter(fn {_, {type, _}} -> type == :error end)
-      |> Enum.map(fn {filename, {_, reason}} -> generate_error_message(filename, reason) end)
-      |> Enum.join("\n")
-      |> with_exit_status(1)
+      generate_error_messages_with_exit_status(results, params)
     else
-      results
-      |> Enum.map(fn {:ok, text} -> text end)
-      |> Enum.join()
-      |> Halloween.to_halloween(halloween)
-      |> with_exit_status(0)
+      convert_contents_of_files_to_halloween_with_exit_status(results, params)
     end
+  end
+
+  defp generate_error_messages_with_exit_status(results, {filenames, _}) do
+    Enum.zip(filenames, results)
+    |> Enum.filter(fn {_, {type, _}} -> type == :error end)
+    |> Enum.map(fn {filename, {_, reason}} -> generate_error_message(filename, reason) end)
+    |> Enum.join("\n")
+    |> with_exit_status(1)
+  end
+
+  defp convert_contents_of_files_to_halloween_with_exit_status(results, {_, halloween}) do
+    results
+    |> Enum.map(fn {:ok, text} -> text end)
+    |> Enum.join()
+    |> Halloween.to_halloween(halloween)
+    |> with_exit_status(0)
   end
 
   defp generate_error_message(filename, reason) do
