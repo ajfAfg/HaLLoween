@@ -110,8 +110,13 @@ defmodule Halloween.CLI do
     """
   end
 
-  def display({text, exit_status}) do
+  def display({text, 0}) do
     IO.write(text)
+    0
+  end
+
+  def display({text, exit_status}) do
+    IO.write(:stderr, text)
     exit_status
   end
 end
