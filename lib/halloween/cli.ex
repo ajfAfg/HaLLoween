@@ -1,6 +1,6 @@
 defmodule Halloween.CLI do
   @version Mix.Project.config()[:version]
-  @stdin "-"
+  # @stdin "-"
 
   @moduledoc false
 
@@ -44,7 +44,7 @@ defmodule Halloween.CLI do
   defp to_ir_for_options(%{halloween: halloween}), do: halloween
   defp to_ir_for_options(_), do: rand()
 
-  defp to_ir_for_args([]), do: @stdin
+  defp to_ir_for_args([]), do: :stdin
   defp to_ir_for_args(filenames), do: filenames
 
   defp rand(), do: Enum.random(1..100)
@@ -62,7 +62,7 @@ defmodule Halloween.CLI do
 
   def process(:version), do: @version |> with_exit_status(0)
 
-  def process({"-", halloween}) do
+  def process({:stdin, halloween}) do
     IO.read(:all)
     |> Halloween.to_halloween(halloween)
     |> with_exit_status(0)
