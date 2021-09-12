@@ -1,6 +1,5 @@
 defmodule Halloween.CLI do
   @version Mix.Project.config()[:version]
-  # @stdin "-"
 
   @moduledoc false
 
