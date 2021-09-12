@@ -102,7 +102,7 @@ defmodule CliTest do
 
     test "Return error messages if some files cannot be read.", fixture do
       filenames = ["not_found.txt" | fixture.filenames]
-      assert process({filenames, 0}) == {"not_found.txt: no such file or directory", 1}
+      assert process({filenames, 0}) == {"not_found.txt: no such file or directory\n", 1}
     end
   end
 end
